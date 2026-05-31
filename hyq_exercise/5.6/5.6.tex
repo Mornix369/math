@@ -1,0 +1,126 @@
+% !TeX program = xelatex
+\documentclass[UTF8,12pt,a4paper]{ctexart}
+\usepackage{amsmath,amssymb}
+\usepackage{geometry}
+\geometry{margin=2cm}
+
+% ===== 水印：贺昱琪学习资料 =====
+\usepackage{xcolor}
+\usepackage{eso-pic}
+\usepackage{graphicx}
+
+\newcommand{\WMText}{贺昱琪学习资料}
+\newcommand{\WMScale}{2.28}
+\newcommand{\WMAngle}{45}
+\colorlet{WMColor}{black!8}
+
+\AddToShipoutPictureBG{%
+  \AtPageLowerLeft{%
+    \put(\LenToUnit{0.66\paperwidth},\LenToUnit{0.70\paperheight}){%
+      \rotatebox{\WMAngle}{\scalebox{\WMScale}{\textcolor{WMColor}{\WMText}}}%
+    }%
+    \put(\LenToUnit{0.33\paperwidth},\LenToUnit{0.50\paperheight}){%
+      \rotatebox{\WMAngle}{\scalebox{\WMScale}{\textcolor{WMColor}{\WMText}}}%
+    }%
+    \put(\LenToUnit{0.66\paperwidth},\LenToUnit{0.30\paperheight}){%
+      \rotatebox{\WMAngle}{\scalebox{\WMScale}{\textcolor{WMColor}{\WMText}}}%
+    }%
+  }%
+}
+
+% ===== 5题铺满一页布局 =====
+\usepackage{enumitem}
+\newcommand{\BottomWriteSpace}{1.8cm}
+
+\newenvironment{OnePageFiveFill}{
+  \small
+  \vspace*{0pt}
+  \begin{enumerate}[leftmargin=*, itemsep=0pt, topsep=0pt, parsep=0pt, partopsep=0pt]
+  \setlength{\parskip}{0pt}
+}{
+  \end{enumerate}
+  \vspace*{\BottomWriteSpace}
+  \normalsize
+  \newpage
+}
+
+\newcommand{\Q}[1]{\item #1\par\vfill}
+\newcommand{\Qlast}[1]{\item #1\par}
+
+\begin{document}
+
+% =========================================================
+% 5.13
+% =========================================================
+\section*{5月6日作业（5道题当晚22:00前打卡）}
+\begin{OnePageFiveFill}
+
+\Q{$76 \times \left(\dfrac{1}{23} - \dfrac{1}{53}\right) + 23 \times \left(\dfrac{1}{53} + \dfrac{1}{76}\right) - 53 \times \left(\dfrac{1}{23} - \dfrac{1}{76}\right)$}
+
+\Q{$\displaystyle \frac{987 \times 655 - 321}{987 \times 654 + 666}$}
+
+\Q{（牛吃草问题）一水库原有存水量一定，河水每天均匀入库。$5$台抽水机连续$20$天可抽干；$6$台同样的抽水机连续$15$天可抽干。若要求$6$天抽干，需要多少台同样的抽水机？}
+
+\Q{（圆锥的体积）一个倒置的圆锥形容器中装有$4$升水，此时水面高度正好是圆锥高度的一半，这个容器还能装水多少升？}
+
+\Qlast{解方程：$\dfrac{3x+1}{2} - \dfrac{2x-3}{3} = \dfrac{x+5}{6}$}
+
+\end{OnePageFiveFill}
+
+% =========================================================
+% 5.14
+% =========================================================
+\section*{5月7日作业（5道题当晚22:00前打卡）}
+\begin{OnePageFiveFill}
+
+\Q{$97 \times \left(\dfrac{1}{41} - \dfrac{1}{56}\right) + 41 \times \left(\dfrac{1}{56} + \dfrac{1}{97}\right) - 56 \times \left(\dfrac{1}{41} - \dfrac{1}{97}\right)$}
+
+\Q{$\displaystyle \frac{765 \times 433 - 210}{765 \times 432 + 555}$}
+
+\Q{（牛吃草问题）一水库原有存水量一定，河水每天均匀入库。$7$台抽水机连续$20$天可抽干；$11$台同样的抽水机连续$10$天可抽干。若要求$5$天抽干，需要多少台同样的抽水机？}
+
+\Q{（圆锥的体积）一个倒置的圆锥形容器中装有$2$升水，此时水面高度正好是圆锥高度的$\dfrac{1}{3}$，这个容器还能装水多少升？}
+
+\Qlast{计算：$\displaystyle \left(1 + \frac{1}{2} + \frac{1}{3}\right) \times \left(\frac{1}{2} + \frac{1}{3} + \frac{1}{4}\right) - \left(1 + \frac{1}{2} + \frac{1}{3} + \frac{1}{4}\right) \times \left(\frac{1}{2} + \frac{1}{3}\right)$}
+
+\end{OnePageFiveFill}
+
+% =========================================================
+% 5.15
+% =========================================================
+\section*{5月8日作业（5道题当晚22:00前打卡）}
+\begin{OnePageFiveFill}
+
+\Q{$85 \times \left(\dfrac{1}{37} - \dfrac{1}{48}\right) + 37 \times \left(\dfrac{1}{48} + \dfrac{1}{85}\right) - 48 \times \left(\dfrac{1}{37} - \dfrac{1}{85}\right)$}
+
+\Q{$\displaystyle \frac{842 \times 526 - 315}{842 \times 525 + 527}$}
+
+\Q{（牛吃草问题）一水库原有存水量一定，河水每天均匀入库。$10$台抽水机连续$15$天可抽干；$14$台同样的抽水机连续$9$天可抽干。若要求$6$天抽干，需要多少台同样的抽水机？}
+
+\Q{（圆锥的体积）一个倒置的圆锥形容器中装有$5$升水，此时水面高度正好是圆锥高度的一半，这个容器还能装水多少升？}
+
+\Qlast{解含小数的方程：$\dfrac{1.2x - 0.6}{0.3} - \dfrac{1.5x + 2}{0.5} = 4$}
+
+\end{OnePageFiveFill}
+
+% =========================================================
+% 5.16
+% =========================================================
+\section*{5月9日作业（5道题当晚22:00前打卡）}
+\begin{OnePageFiveFill}
+
+\Q{$83 \times \left(\dfrac{1}{19} - \dfrac{1}{64}\right) + 19 \times \left(\dfrac{1}{64} + \dfrac{1}{83}\right) - 64 \times \left(\dfrac{1}{19} - \dfrac{1}{83}\right)$}
+
+\Q{$\displaystyle \frac{654 \times 322 - 123}{654 \times 321 + 531}$}
+
+\Q{（牛吃草问题）一水库原有存水量一定，河水每天均匀入库。$10$台抽水机连续$24$天可抽干；$13$台同样的抽水机连续$15$天可抽干。若要求$8$天抽干，需要多少台同样的抽水机？}
+
+\Q{（圆锥的体积）一个倒置的圆锥形容器中装有$3$升水，此时水面高度正好是圆锥高度的$\dfrac{1}{3}$，这个容器还能装水多少升？}
+
+\Qlast{综合计算：$\displaystyle \frac{1}{2} \div \left[ \left( \frac{3}{4} - \frac{1}{6} \right) \times \frac{12}{7} \right] \times \frac{5}{6}$}
+
+\end{OnePageFiveFill}
+
+
+
+\end{document}
