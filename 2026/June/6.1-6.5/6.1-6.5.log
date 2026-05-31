@@ -1,10 +1,10 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.5.1)  25 MAY 2026 22:53
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.5.1)  31 MAY 2026 22:35
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**e:/data/vscode_files/Latex/hyq_exercise/5_25/5_25
-(e:/data/vscode_files/Latex/hyq_exercise/5_25/5_25.tex
+**d:/data/VS_code/math/2026/June/6.1-6.5/6.1-6.5
+(d:/data/VS_code/math/2026/June/6.1-6.5/6.1-6.5.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
 (d:/Program/TexLive/texlive/2026/texmf-dist/tex/latex/ctex/ctexart.cls (d:/Program/TexLive/texlive/2026/texmf-dist/tex/latex/ctex/config/ctexbackend.cfg
@@ -639,8 +639,8 @@ Package: enumitem 2025/02/06 v3.11 Customized lists
 \enit@inbox=\box69
 \enit@count@id=\count347
 \enitdp@description=\count348
-) (./5_25.aux)
-\openout1 = `5_25.aux'.
+) (./6.1-6.5.aux)
+\openout1 = `6.1-6.5.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 51.
 LaTeX Font Info:    ... okay on input line 51.
@@ -757,21 +757,71 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 LaTeX Font Info:    Trying to load font information for U+msb on input line 59.
  (d:/Program/TexLive/texlive/2026/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [1
+)
+Overfull \hbox (2.43968pt too wide) in paragraph at lines 78--78
+[]$[]$  $[]$ 
+ []
 
-] [2] [3] [4] [5] (./5_25.aux)
+
+Overfull \hbox (2.43968pt too wide) in paragraph at lines 98--98
+[]$[]$  $[]$ 
+ []
+
+[1
+
+]
+Overfull \hbox (2.43968pt too wide) in paragraph at lines 127--127
+[]$[]$  $[]$ 
+ []
+
+
+Overfull \hbox (2.43968pt too wide) in paragraph at lines 147--147
+[]$[]$  $[]$ 
+ []
+
+[2]
+Overfull \hbox (2.43968pt too wide) in paragraph at lines 176--176
+[]$[]$  $[]$ 
+ []
+
+
+Overfull \hbox (2.43968pt too wide) in paragraph at lines 196--196
+[]$[]$  $[]$ 
+ []
+
+[3]
+Overfull \hbox (2.43968pt too wide) in paragraph at lines 225--225
+[]$[]$  $[]$ 
+ []
+
+
+Overfull \hbox (2.43968pt too wide) in paragraph at lines 245--245
+[]$[]$  $[]$ 
+ []
+
+[4]
+Overfull \hbox (2.43968pt too wide) in paragraph at lines 274--274
+[]$[]$  $[]$ 
+ []
+
+
+Overfull \hbox (2.43968pt too wide) in paragraph at lines 294--294
+[]$[]$  $[]$ 
+ []
+
+[5] (./6.1-6.5.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2022/07/14>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 19785 strings out of 468168
- 474586 string characters out of 5429117
- 857496 words of memory out of 5000000
- 48186 multiletter control sequences out of 15000+600000
+ 19859 strings out of 468168
+ 476244 string characters out of 5429117
+ 859505 words of memory out of 5000000
+ 48258 multiletter control sequences out of 15000+600000
  634179 words of font info for 81 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 102i,11n,111p,456b,854s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 102i,11n,111p,453b,755s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on 5_25.pdf (5 pages).
+Output written on 6.1-6.5.pdf (5 pages).
