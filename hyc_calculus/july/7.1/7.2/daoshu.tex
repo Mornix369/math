@@ -1,0 +1,229 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{ctex}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{bm}
+
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+
+% --- 新增的水印所需宏包 ---
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{eso-pic}
+
+\geometry{left=2cm,right=2cm,top=2.5cm,bottom=2.5cm}
+
+% --- 用户自定义水印代码开始 ---
+\newcommand{\WMText}{贺昱超学习资料}
+\newcommand{\WMScale}{2.28}
+\newcommand{\WMAngle}{45}
+\colorlet{WMColor}{black!8}
+
+\AddToShipoutPictureBG{%
+  \AtPageLowerLeft{%
+    \put(\LenToUnit{0.66\paperwidth},\LenToUnit{0.70\paperheight}){%
+      \rotatebox{\WMAngle}{\scalebox{\WMScale}{\textcolor{WMColor}{\WMText}}}%
+    }%
+    \put(\LenToUnit{0.33\paperwidth},\LenToUnit{0.50\paperheight}){%
+      \rotatebox{\WMAngle}{\scalebox{\WMScale}{\textcolor{WMColor}{\WMText}}}%
+    }%
+    \put(\LenToUnit{0.66\paperwidth},\LenToUnit{0.30\paperheight}){%
+      \rotatebox{\WMAngle}{\scalebox{\WMScale}{\textcolor{WMColor}{\WMText}}}%
+    }%
+  }%
+}
+% --- 用户自定义水印代码结束 ---
+
+\title{\textbf{微积分在实际工程中的应用\\ —— 增强现实（AR）}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+现代 3D 视觉技术（如增强现实 AR 与虚拟现实 VR）的飞速发展，其底层驱动力源自严密的数学理论。主要是微积分与高等数学知识在三维空间计算中的核心应用。如多元微积分（如偏导数、链式法则、一阶泰勒展开）如何构建雅可比矩阵，从而实现
+连续空间的可微渲染与非线性状态估计；同时，展示了线性代数与群论概念（如奇异值分解 SVD、李群与李代数、舒尔补消元法）在解
+决海量参数优化与高维矩阵降维求解中的“工程化魔法”。
+\end{abstract}
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\section{第一阶段：传感器输入 (Sensor Input) —— 睁开带深度的眼睛}
+这是整个流水线的源头，负责直接感知物理世界的真实尺度。
+\begin{itemize}
+    \item \textbf{动作：} 相机以固定的帧率（如 30 FPS）拍摄现实世界。
+    \item \textbf{数据形态（深度传感器红利）：} 
+    \begin{itemize}
+        \item \textbf{RGB-D 相机：} 利用红外结构光或飞行时间法 (ToF)，直接输出一张彩色图 + 一张完全对齐的深度图（每个像素自带真实的物理距离）。
+        \item \textbf{双目相机 (Stereo)：} 左右两颗标准的摄像头同时拍摄，利用左右视差与基线物理距离硬计算出深度。
+    \end{itemize}
+    \item \textbf{说明：} 深度传感器的引入彻底消除了单目视觉中的“尺度不确定性”，系统可直接获取具备真实物理比例的 3D 点云，无需进行复杂的单目对极几何初始化。
+\end{itemize}
+
+\section{第二阶段：前端视觉里程计 (Visual Odometry) —— 3D 空间追踪}
+前端类似人类的“小脑”，负责处理极短时间内的快速反应，计算相邻两帧之间相机发生的真实相对运动。
+
+\subsection{步骤 1：特征提取 (Feature Extraction)}
+机器无法逐个处理图像上的所有像素，必须找出图像中最具辨识度的“特征点”（如桌角、门框）。
+\begin{itemize}
+    \item \textbf{提取关键点 (Keypoint)：} 寻找图像中梯度变化剧烈、特征显著的位置（即二维像素坐标 $u, v$）。
+    \item \textbf{计算描述子 (Descriptor)：} 考察关键点周围的像素块特征，生成一串二进制或浮点型数字指纹（如 ORB 的 256 位二进制串），为后续多视角相认提供依据。
+\end{itemize}
+
+\subsection{步骤 2：特征匹配 (Feature Matching)}
+当相机移动拍下第 2 帧图像并同样提取特征点后，机器在两帧的特征点描述子之间进行连线比对（计算汉明距离或欧氏距离）。
+\begin{itemize}
+    \item \textbf{剔除杂音：} 现实中常存在相似纹理干扰导致误匹配。系统采用 \textbf{RANSAC（随机采样一致性）} 算法，剔除不符合刚体空间运动规律的错配点，留下高质量匹配对。
+\end{itemize}
+
+\subsection{步骤 3：位姿估计 (Pose Estimation)}
+由于具备深度图，每一个匹配好的 2D 像素点匹配对，都可以结合相机的内参直接反投影为真实的 3D 空间坐标。此时，相机的运动估计转化为了经典的 \textbf{3D-3D 刚体配准与对齐问题}。系统采用 \textbf{ICP (Iterative Closest Point)} 算法直接求解。
+
+\vspace{0.3cm}
+\textbf{【核心数学推导】：ICP 算法的 SVD 解析解过程}
+
+假设在第一帧相机坐标系下的 3D 特征点集为 $P = \{\mathbf{p}_1, \dots, \mathbf{p}_n\}$，在第二帧相机坐标系下的匹配点集为 $P' = \{\mathbf{p}'_1, \dots, \mathbf{p}'_n\}$。我们要寻找相机的旋转矩阵 $R$ 和平移向量 $\mathbf{t}$，使得两组空间点对齐后的重合误差平方和最小（最小二乘法优化问题）：
+\begin{equation}
+    \min_{R,\mathbf{t}} \frac{1}{2} \sum_{i=1}^{n} \| \mathbf{p}'_i - (R \mathbf{p}_i + \mathbf{t}) \|^2
+\end{equation}
+
+\subsubsection{计算空间点云质心并执行去质心化}
+首先，通过离散积分平均计算两组点云在三维空间中的几何质心（Centroid）：
+\begin{equation}
+    \mathbf{c} = \frac{1}{n} \sum_{i=1}^{n} \mathbf{p}_i, \quad \mathbf{c}' = \frac{1}{n} \sum_{i=1}^{n} \mathbf{p}'_i
+\end{equation}
+将所有的空间点坐标减去其对应的质心，得到去质心化后的纯相对位置坐标：
+\begin{equation}
+    \mathbf{q}_i = \mathbf{p}_i - \mathbf{c}, \quad \mathbf{q}'_i = \mathbf{p}'_i - \mathbf{c}'
+\end{equation}
+
+\subsubsection{解耦平移向量，专注求解旋转矩阵}
+根据微积分极值条件化简，上述目标函数可以发生数学解耦。最优的旋转矩阵 $R$ 的求解可彻底剥离平移向量 $\mathbf{t}$，仅依赖于去质心化后的坐标：
+\begin{equation}
+    \min_{R} \frac{1}{2} \sum_{i=1}^{n} \| \mathbf{q}'_i - R \mathbf{q}_i \|^2
+\end{equation}
+由于 $\| \mathbf{q}'_i - R \mathbf{q}_i \|^2 = (\mathbf{q}'_i)^T \mathbf{q}'_i - 2(\mathbf{q}'_i)^T R \mathbf{q}_i + \mathbf{q}_i^T R^T R \mathbf{q}_i$，且旋转矩阵满足正交性 $R^T R = I$，因此前后的平方项均为常数。最小化该目标函数，在数学上完全等价于最大化交叉项之和 $\sum (\mathbf{q}'_i)^T R \mathbf{q}_i$。\\
+为此，我们构建一个描述两组空间点分布关联性的 $3 \times 3$ 协方差矩阵 $W$：
+\begin{equation}
+    W = \sum_{i=1}^{n} \mathbf{q}_i (\mathbf{q}'_i)^T
+\end{equation}
+
+\subsubsection{奇异值分解 (SVD) 恢复运动参数}
+对上述构建的矩阵 $W$ 进行经典的\textbf{奇异值分解 (SVD)}：
+\begin{equation}
+    W = U \Sigma V^T
+\end{equation}
+根据矩阵分析与正交 Procrustes 问题定理，当 $W$ 满秩时，使得目标误差最小的唯一最优旋转矩阵 $R$ 存在闭式解：
+\begin{equation}
+    R = V U^T
+\end{equation}
+\textit{（注：若解出的 $\det(R) = -1$，说明发生了物理上不可能的镜像反射，需将矩阵 $V$ 的最后一列取反以保证旋转矩阵属于合法的特殊正交群 $SO(3)$）。}\\
+求得最优旋转 $R$ 后，将其与之前的质心代回原方程，即可极其轻松地求出最优的平移向量 $\mathbf{t}$：
+\begin{equation}
+    \mathbf{t} = \mathbf{c}' - R \mathbf{c}
+\end{equation}
+至此，前端在已知的深度条件下，仅消耗了极低且极其稳定的 CPU 代数算力，便恢复出了带有绝对真实尺度的相邻帧间相机运动轨迹。
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\section{第三阶段：后端非线性优化 (Back-end Optimization) —— 精雕细琢}
+虽然前端 ICP 给出了解析解，但由于深度传感器自身（如红外噪声、飞点噪声）在测量中不可避免地带有随机误差，误差仍会随时间累积。后端类似“大脑”，通过大范围的全局约束进行非线性误差打磨。
+
+\subsection{步骤 1：构建关键帧 (Keyframes)}
+若将连续拍摄的每一帧图像全部送给后端进行多维矩阵计算，内存会瞬间崩溃。系统会根据运动幅度或新视觉特征比例，精选出具有代表性的帧作为\textbf{关键帧}，把冗余的普通中间帧丢弃。
+
+\subsection{步骤 2：光束法平差 (Bundle Adjustment, BA)}
+将一段时间内的所有关键帧位姿和 3D 路标点全部构建到一个庞大的误差代价函数中。虽然深度已知，现代最稳健的做法依然是将 3D 空间路标点反投回 2D 像素平面，利用重投影误差进行非线性迭代打磨。
+
+\vspace{0.3cm}
+\textbf{【核心数学推导】：后端 BA 优化求导过程}
+
+\subsubsection{后端状态表达：李群与李代数}
+相机位姿变换矩阵 $T \in SE(3)$ 对加法不封闭。为应用微积分梯度下降，引入李代数 $\xi = [\bm{\rho}, \bm{\phi}]^T \in \mathfrak{se}(3)$，通过指数映射转换 $T = \exp(\xi^{\wedge})$。采用\textbf{左扰动模型} (Left Perturbation Model)，给当前位姿 $T$ 施加微小左扰动 $\Delta T = \exp(\delta \xi^{\wedge})$：
+\begin{equation}
+    T_{new} = \exp(\delta \xi^{\wedge}) T
+\end{equation}
+
+\subsubsection{重投影误差与多元微积分雅可比矩阵}
+设空间点在世界坐标系下为 $P_w$，其转换到相机坐标系为 $P_c = [X_c, Y_c, Z_c]^T = T P_w$。经过针孔相机模型投影到像素平面的理论值为函数 $h(\xi, P_w)$，特征匹配观测像素值为 $\mathbf{z}$。定义重投影误差 $\mathbf{e}(\xi) = \mathbf{z} - h(\xi, P_w)$。\\
+利用多元微积分的\textbf{链式法则}（Chain Rule），求误差 $\mathbf{e}$ 对位姿李代数微小扰动 $\delta \xi$ 的一阶偏导数（即雅可比矩阵 $J$）：
+\begin{equation}
+    J = \frac{\partial \mathbf{e}}{\partial \delta \xi} = \frac{\partial \mathbf{e}}{\partial P_c} \frac{\partial P_c}{\partial \delta \xi}
+\end{equation}
+第一项（像素误差对三维相机空间坐标的偏导，尺寸为 $2 \times 3$）：
+\begin{equation}
+    \frac{\partial \mathbf{e}}{\partial P_c} = - 
+    \begin{bmatrix} 
+        \frac{f_x}{Z_c} & 0 & -\frac{f_x X_c}{Z_c^2} \\ 
+        0 & \frac{f_y}{Z_c} & -\frac{f_y Y_c}{Z_c^2} 
+    \end{bmatrix}
+\end{equation}
+第二项（一阶泰勒展开下，空间三维坐标点对李代数运动扰动的偏导，尺寸为 $3 \times 6$）：
+\begin{equation}
+    \frac{\partial P_c}{\partial \delta \xi} = 
+    \begin{bmatrix} 
+        I_{3 \times 3} & -P_c^{\wedge} 
+    \end{bmatrix} =
+    \begin{bmatrix}
+        1 & 0 & 0 & 0 & Z_c & -Y_c \\
+        0 & 1 & 0 & -Z_c & 0 & X_c \\
+        0 & 0 & 1 & Y_c & -X_c & 0
+    \end{bmatrix}
+\end{equation}
+将两项进行矩阵乘法相乘，最终推导出视觉 SLAM 后端优化最核心的 $2 \times 6$ 维位姿雅可比矩阵公式：
+\begin{equation}
+    J = -
+    \begin{bmatrix} 
+        \frac{f_x}{Z_c} & 0 & -\frac{f_x X_c}{Z_c^2} & -\frac{f_x X_c Y_c}{Z_c^2} & f_x + \frac{f_x X_c^2}{Z_c^2} & -\frac{f_x Y_c}{Z_c} \\ 
+        0 & \frac{f_y}{Z_c} & -\frac{f_y Y_c}{Z_c^2} & -f_y - \frac{f_y Y_c^2}{Z_c^2} & \frac{f_y X_c Y_c}{Z_c^2} & \frac{f_y X_c}{Z_c} 
+    \end{bmatrix}
+\end{equation}
+
+\subsubsection{高斯-牛顿迭代法与舒尔补 (Schur Complement) 降维消元}
+为了使误差平方和最小，算法在当前状态处进行线性化，构造高斯-牛顿增量方程：$H \delta \mathbf{x} = - \mathbf{b}$（其中 $H = J^T J, \mathbf{b} = J^T \mathbf{e}$）。\\
+由于状态变量包含了海量的相机关键帧位姿和成千上万个三维空间路标点，海森矩阵 $H$ 的维度异常庞大。系统利用点与帧之间局部的相关性，将 $H$ 矩阵分块为位姿块 (c) 和路标点块 (p)：
+\begin{equation}
+    \begin{bmatrix} 
+        H_{cc} & H_{cp} \\ 
+        H_{pc} & H_{pp} 
+    \end{bmatrix} 
+    \begin{bmatrix} 
+        \delta \mathbf{x}_c \\ 
+        \delta \mathbf{x}_p 
+    \end{bmatrix} = 
+    \begin{bmatrix} 
+        -\mathbf{b}_c \\ 
+        -\mathbf{b}_p 
+    \end{bmatrix}
+\end{equation}
+由于空间路标点之间完全互不相关，其对应的分块矩阵 $H_{pp}$ 呈现完美的对角块状矩阵。后端应用线性代数中的\textbf{舒尔补消元（边缘化 Marginalization）}操作，先在代数上将海量的路标点增量项一次性消去：
+\begin{equation}
+    (H_{cc} - H_{cp} H_{pp}^{-1} H_{pc}) \delta \mathbf{x}_c = -\mathbf{b}_c + H_{cp} H_{pp}^{-1} \mathbf{b}_p
+\end{equation}
+因为 $H_{pp}$ 的对角块特性使其求逆 $H_{pp}^{-1}$ 仅需对其对角小矩阵进行极快的倒数计算，该方程的维度瞬间缩减为仅与相机位姿数量相关。解出位姿增量 $\delta \mathbf{x}_c$ 后，再反代求出路标点增量，使得整套复杂系统具备了极高精度的全局实时对齐与精调能力。
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\section{第四阶段：回环检测 (Loop Closure) —— 唤醒记忆}
+即使有后端优化，只要系统运行时间足够长，误差依然会悄悄累积。回环检测就是 SLAM 的“似曾相识（Déjà vu）”机制。
+\begin{itemize}
+    \item \textbf{词袋模型 (Bag of Words, BoW)：} 系统会把之前看到过的特征点描述子聚类成一本视觉“字典”。当相机来到一个新地方时，它会高效查字典，判断“这个地方我以前是不是来过？”
+    \item \textbf{全局位姿图优化 (Pose Graph Optimization)：} 确定发生闭环后，系统建立远距离的关键帧连接约束。由于深度/双目相机天生具备物理尺寸，它在闭环时**完全没有尺度漂移（Scale Drift）**，其位姿图优化的收敛速度和几何稳定性远超普通的单目视觉 SLAM，能瞬间消除任何细微的全局累积位置漂移。
+\end{itemize}
+
+\section{第五阶段：建图 (Mapping) —— 免费的稠密数字孪生红利}
+最终，机器要把算出来的 3D 成果输出。在深度/双目相机体系下，由于每一帧图像本身就自带高精度的真实物理深度图，系统将爆发巨大的**“稠密建图红利”**：
+\begin{itemize}
+    \item \textbf{稠密点云地图 (Dense Point Cloud)：} 单目视觉若想生成稠密地图，必须消耗极其恐怖的算力去在多帧图像间暴力搜索视差。而深度相机无需任何额外深度估计，直接根据后端 BA 精调出来的确切相机位姿 $T$，将一帧帧深度图像像素通过三维几何刚体变换，完美“拼贴”和灌注到世界坐标系中，从而直接“所见即所得”地生长出照片级的致密三维点云。
+    \item \textbf{体积与拓扑控制：} 为了让机器人能够进行路径规划、避障或者用于 AR/VR 场景的交互渲染，系统通常还会将稠密点云通过数学网格化，转换为更精简的**八叉树地图 (OctoMap)** 或**截断符号距离场 (TSDF)** 模型，完美描绘现实世界的表面轮廓。
+\end{itemize}
+
+\end{document}
