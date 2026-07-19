@@ -1,0 +1,63 @@
+\documentclass[12pt, a4paper]{ctexart}
+\usepackage{geometry}
+\geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
+
+% 标题与作者信息
+\title{基于目标检测的智能机器人动态视觉SLAM系统设计}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+% 中文摘要与关键字
+\begin{abstract}
+随着人工智能技术在移动机器人与自动驾驶领域的深入应用，传统视觉SLAM系统在复杂动态场景下极易受运动物体干扰而导致定位失效。针对此痛点，本文提出了一种融合深度学习视觉感知与几何运动校验的智能化SLAM应用方案。该方案首先引入YOLO轻量级目标检测网络作为AI感知前端，实时提取环境的高层语义信息并锁定潜在的动态干扰源；其次，在AI语义先验的引导下，结合稀疏光流追踪与对极几何卡方检验，对目标边界框内的特征点进行智能化的运动校验与深度清洗，有效解决了目标框内静态背景被误剔除的问题；最后，利用结构约束对位姿进行补偿计算。实验表明，这种“AI语义感知+底层几何校验”的系统架构，不仅显著提升了动态干扰环境下的全局定位精度与鲁棒性，同时保证了算法的实时性，为智能服务机器人在复杂现实场景中的落地应用提供了可靠的底层导航支持。
+
+\noindent \textbf{关键词：} 人工智能；视觉SLAM；深度学习；YOLO；动态场景；系统集成
+\end{abstract}
+
+% 英文摘要与关键字
+\renewcommand{\abstractname}{\textbf{Abstract}}
+\begin{abstract}
+With the deep application of artificial intelligence in mobile robots and autonomous driving, traditional visual SLAM systems are highly susceptible to moving objects in complex dynamic environments, leading to localization failures. To address this issue, this paper proposes an intelligent SLAM scheme combining deep learning visual perception with geometric motion validation. The scheme first introduces the lightweight YOLO object detection network as the AI perception frontend to extract high-level semantic information of the environment and lock potential dynamic interferences in real-time. Secondly, guided by the AI semantic prior, sparse optical flow tracking and epipolar geometry-based Chi-square test are integrated to perform intelligent motion validation and deep cleaning of feature points within target bounding boxes, effectively solving the problem of false elimination of static background points. Finally, structural constraints are utilized to compensate for the pose estimation. Experimental results show that the "AI semantic perception + low-level geometric validation" architecture significantly improves global localization accuracy and robustness in dynamic environments while maintaining real-time performance, providing reliable underlying navigation support for intelligent service robots in complex real-world scenarios.
+
+\noindent \textbf{Keywords:} Artificial Intelligence; Visual SLAM; Deep Learning; YOLO; Dynamic Environments; System Integration
+\end{abstract}
+
+\newpage
+% 自动生成目录
+\tableofcontents
+\newpage
+
+% 正文结构
+\section{引言}
+\subsection{研究背景与意义}
+\subsection{国内外研究现状}
+\subsection{本文主要研究内容}
+
+\section{系统总体设计与架构}
+\subsection{系统总体框架}
+\subsection{YOLO语义感知前端设计}
+
+\section{结合AI语义与几何先验的动态特征筛除算法}
+\subsection{稀疏光流追踪与运动预测}
+\subsection{基于对极几何的卡方检验模型构建}
+\subsection{边界框内静态背景点的保留机制}
+
+\section{结构约束辅助的位姿补偿与状态估计}
+\subsection{场景结构特征提取}
+\subsection{位姿约束与非线性优化}
+
+\section{实验结果与分析}
+\subsection{实验软硬件环境设置}
+\subsection{动态特征点剔除效果定性分析}
+\subsection{定位精度与鲁棒性定量评估}
+\subsection{算法运行效率与实时性分析}
+
+\section{结论与展望}
+\subsection{总结}
+\subsection{进一步展望}
+
+\end{document}
