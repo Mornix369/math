@@ -1,10 +1,10 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.5.1)  19 JUL 2026 21:18
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.5.1)  19 JUL 2026 23:42
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**d:/data/VS_code/math/2026/May/5_25/5_25
-(d:/data/VS_code/math/2026/May/5_25/5_25.tex
+**d:/data/VS_code/math/2026/July/719weekly/719weekly
+(d:/data/VS_code/math/2026/July/719weekly/719weekly.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
 (d:/Program/TexLive/texlive/2026/texmf-dist/tex/latex/ctex/ctexart.cls (d:/Program/TexLive/texlive/2026/texmf-dist/tex/latex/ctex/config/ctexbackend.cfg
@@ -639,8 +639,8 @@ Package: enumitem 2025/02/06 v3.11 Customized lists
 \enit@inbox=\box69
 \enit@count@id=\count347
 \enitdp@description=\count348
-) (./5_25.aux)
-\openout1 = `5_25.aux'.
+) (./719weekly.aux)
+\openout1 = `719weekly.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 51.
 LaTeX Font Info:    ... okay on input line 51.
@@ -757,21 +757,66 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 LaTeX Font Info:    Trying to load font information for U+msb on input line 59.
  (d:/Program/TexLive/texlive/2026/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [1
+)
+Overfull \hbox (1.92502pt too wide) in paragraph at lines 76--76
+[][] 
+ []
 
-] [2] [3] [4] [5] (./5_25.aux)
+
+Overfull \hbox (2.43968pt too wide) in paragraph at lines 76--76
+[]$[]$  $[]$ 
+ []
+
+[1
+
+]
+Overfull \hbox (3.62865pt too wide) in paragraph at lines 158--158
+[][] 
+ []
+
+
+Overfull \hbox (2.43968pt too wide) in paragraph at lines 158--158
+[]$[]$  $[]$ 
+ []
+
+[2]
+Overfull \hbox (1.92502pt too wide) in paragraph at lines 217--217
+[][] 
+ []
+
+
+Overfull \hbox (2.43968pt too wide) in paragraph at lines 217--217
+[]$[]$  $[]$ 
+ []
+
+[3]
+Overfull \hbox (2.43968pt too wide) in paragraph at lines 276--276
+[]$[]$  $[]$ 
+ []
+
+[4]
+Overfull \hbox (2.43968pt too wide) in paragraph at lines 335--335
+[]$[]$  $[]$ 
+ []
+
+[5]
+Overfull \hbox (2.43968pt too wide) in paragraph at lines 394--394
+[]$[]$  $[]$ 
+ []
+
+[6] (./719weekly.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2022/07/14>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 19785 strings out of 468168
- 474556 string characters out of 5429117
- 857496 words of memory out of 5000000
- 48186 multiletter control sequences out of 15000+600000
- 634179 words of font info for 81 fonts, out of 8000000 for 9000
+ 19887 strings out of 468168
+ 477745 string characters out of 5429117
+ 891499 words of memory out of 5000000
+ 48284 multiletter control sequences out of 15000+600000
+ 634832 words of font info for 85 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 102i,11n,111p,446b,854s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 102i,11n,111p,457b,849s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on 5_25.pdf (5 pages).
+Output written on 719weekly.pdf (6 pages).
