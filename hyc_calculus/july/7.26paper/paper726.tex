@@ -1,0 +1,93 @@
+\documentclass[12pt,a4paper]{ctexart}
+\usepackage{amsmath}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+\usepackage{booktabs}
+
+\title{面向边缘计算的基于曼哈顿结构先验与自适应概率滤波的实时动态 SLAM[cite: 2]}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+高度动态室内环境下的视觉 SLAM 依然是一个重大挑战，特别是对于受限于有限计算资源的边缘计算设备而言[cite: 2]。现有的动态 SLAM 框架通常依赖于繁重的分割模型和纯几何残差，在局部遮挡或阴影干扰下，往往面临严重的实时性下降，以及对静态结构特征（如墙壁和地板）的过度剔除[cite: 2]。为了解决这些问题，我们提出了一种与曼哈顿结构先验紧密耦合的轻量级实时动态 SLAM 系统[cite: 2]。首先，针对边缘端优化的 YOLO 实例分割网络提供了高频的视觉先验[cite: 2]。我们没有将动态边界框内的所有特征进行“硬剔除”，而是引入了一种级联概率滤波机制[cite: 2]。通过提取符合曼哈顿世界假设的正交平面，我们的算法赋予背景结构特征“静态豁免权”，有效消除了由阴影和物体边界引起的误剔除[cite: 2]。此外，在后端设计了一种特征密度感知的点线联合优化（Point-Line BA）[cite: 2]。它根据特征稀疏度和贝叶斯动态概率动态调整鲁棒核函数和信息矩阵，防止在弱纹理场景中丢失追踪（特征饥饿）[cite: 2]。在公开数据集和真实的边缘设备上的实验表明，我们的系统在动态环境中实现了最先进的定位精度，同时保持了出色的实时性能（>60 FPS）[cite: 2]。
+\end{abstract}
+
+\section{引言}
+\begin{itemize}
+    \item \textbf{背景：} SLAM 在机器人和 AR 中的重要性，特别强调动态环境带来的挑战[cite: 2]。
+    \item \textbf{问题陈述：} 探讨当前动态 SLAM 方法（如 OVD-SLAM）的局限性[cite: 2]。重点突出三个核心问题：
+    \begin{enumerate}
+        \item 高级分割模型在边缘设备上的高昂计算成本[cite: 2]。
+        \item 靠近动态物体时，静态背景特征（墙壁/地板）容易被误分类[cite: 2]。
+        \item 由阴影和光滑表面反射等间接动态干扰引起的特征饥饿与轨迹漂移[cite: 2]。
+    \end{enumerate}
+    \item \textbf{提出的解决方案：} 简要介绍专为资源受限的边缘计算设计的 MD-SLAM（曼哈顿-动态 SLAM）架构[cite: 2]。强调“级联概率滤波”以及曼哈顿结构先验的融合[cite: 2]。
+    \item \textbf{核心贡献：}
+    \begin{itemize}
+        \item 一种新颖的级联概率滤波机制，通过执行分层剔除大幅降低计算开销[cite: 2]。
+        \item 引入曼哈顿平面豁免机制，在遮挡期间保护关键结构特征免受误剔除[cite: 2]。
+        \item 一种密度感知的点线光束法平差（BA），能够自适应缩放信息矩阵，防止弱纹理区域出现特征饥饿[cite: 2]。
+    \end{itemize}
+\end{itemize}
+
+\section{相关工作}
+\begin{itemize}
+    \item \textbf{静态环境中的视觉 SLAM：} 简要回顾传统方法（ORB-SLAM, VINS-Mono）及其对动态物体的脆弱性[cite: 2]。
+    \item \textbf{基于深度学习的动态 SLAM：} 回顾利用语义分割的方法（如 DynaSLAM）[cite: 2]。指出其沉重的计算负担[cite: 2]。
+    \item \textbf{概率与几何方法（对标 OVD-SLAM）：} 讨论结合视觉和几何的方法（如 OVD-SLAM）[cite: 2]。明确批评它们过度依赖局部极线几何，并且未能考虑全局结构约束（曼哈顿假设）以及间接干扰（阴影）[cite: 2]。
+\end{itemize}
+
+\section{方法论}
+\subsection{系统概述}
+描述双线程架构[cite: 2]。强调高频追踪线程（YOLO + 级联滤波）和低频局部建图线程（曼哈顿提取 + 自适应 BA）[cite: 2]。在此处引用系统架构图[cite: 2]。
+
+\subsection{高频视觉先验（边缘端优化的 YOLO）}
+详细说明轻量级 YOLO 实例分割模型的部署[cite: 2]。解释如何利用边界框和掩码对特征进行初始的快速筛选，以保证实时性能[cite: 2]。
+
+\subsection{结合曼哈顿先验的级联概率滤波}
+\begin{itemize}
+    \item \textbf{曼哈顿平面提取：} 给出正交平面提取的数学公式（$n^T P+d=0$）[cite: 2]。
+    \item \textbf{结构豁免机制：} 定义掩蔽函数 $M_{manhattan}$[cite: 2]。解释符合曼哈顿平面的点是如何被赋予 $P_{dynamic}=0$ 从而绕过极线检验的[cite: 2]。
+    \item \textbf{极线几何校验：} 对于不在曼哈顿平面上的点，描述桑普森距离（Sampson distance）的计算以及几何动态概率（$P_{geo}$）的推导[cite: 2]。
+    \item \textbf{平面阴影抑制：} 阐述将潜在阴影区域投影到提取的地面平面上的公式，以及先验阴影概率的分配[cite: 2]。
+\end{itemize}
+
+\subsection{密度感知自适应点线优化}
+\begin{itemize}
+    \item \textbf{特征密度评估：} 定义有效特征 $N_{active}$ 的计算方法和密度惩罚系数 $\gamma$[cite: 2]。
+    \item \textbf{自适应信息矩阵缩放：} 提出核心公式：$\Omega_{i}^{new} = W_{s} \cdot \Omega_{i}$，其中 $W_{s} = 1 - P_{dynamic}$[cite: 2]。解释其如何融入光束法平差（BA）过程中[cite: 2]。
+    \item \textbf{点线联合约束：} 描述当点特征严重退化或被重度惩罚时，曼哈顿线特征如何提供鲁棒的方向约束[cite: 2]。
+\end{itemize}
+
+\section{实验结果}
+\subsection{实验设置}
+详细说明硬件（特别是强调诸如 RTX 5060 笔记本环境等边缘约束）、使用的数据集（TUM RGB-D 动态序列）和基线方法（ORB-SLAM3, OVD-SLAM, DynaSLAM）[cite: 2]。
+
+\subsection{定位精度评估}
+展示平移和旋转的 RMSE（均方根误差）表格[cite: 2]。分析为什么本文提出的方法优于基线，尤其是在高度动态的序列中（例如 walking\_halfsphere, walking\_rpy）[cite: 2]。
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lccc}
+\toprule
+序列 & ORB-SLAM3 (RMSE) & OVD-SLAM (RMSE) & 本文方法 (MD-SLAM) \\
+\midrule
+walking\_halfsphere & & & \\
+walking\_rpy & & & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{实时性能评估}
+提供不同模块（Tracking, BA）每帧计算时间的详细分解，并将整体 FPS 与基线进行对比，以证明“边缘计算”的可行性[cite: 2]。
+
+\subsection{消融实验}
+批判性地评估每个模块的贡献[cite: 2]。将完整系统与“没有曼哈顿先验”以及“没有密度感知自适应”的版本进行对比，以巩固论文的核心主张[cite: 2]。
+
+\section{结论}
+总结 MD-SLAM 架构的有效性[cite: 2]。重申将曼哈顿先验与概率滤波相结合是如何解决边缘设备上动态 SLAM 的具体痛点的[cite: 2]。简要提及未来工作（例如，扩展到非曼哈顿结构环境中）[cite: 2]。
+
+\end{document}
