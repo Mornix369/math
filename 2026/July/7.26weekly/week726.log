@@ -1,9 +1,9 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.5.1)  26 JUL 2026 22:07
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.5.1)  27 JUL 2026 22:15
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**d:/data/VS_code/math/2026/July/7.26weekly/week726.tex
+**d:/data/VS_code/math/2026/July/7.26weekly/week726
 (d:/data/VS_code/math/2026/July/7.26weekly/week726.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -793,10 +793,10 @@ L3 programming layer <2022/07/14>
 Here is how much of TeX's memory you used:
  19829 strings out of 468168
  473279 string characters out of 5429117
- 866506 words of memory out of 5000000
+ 866505 words of memory out of 5000000
  48226 multiletter control sequences out of 15000+600000
  634832 words of font info for 85 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 102i,11n,111p,460b,811s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 102i,11n,111p,456b,811s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on week726.xdv (5 pages, 85568 bytes).
+Output written on week726.pdf (5 pages).
