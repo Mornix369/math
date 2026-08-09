@@ -1,0 +1,134 @@
+\documentclass[11pt, a4paper]{ctexart}
+
+% 页面设置
+\usepackage{geometry}
+\geometry{left=2.5cm, right=2.5cm, top=3.0cm, bottom=3.0cm}
+
+% 常用宏包
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+% 颜色定义
+\definecolor{primary}{RGB}{0, 71, 153}
+\definecolor{secondary}{RGB}{102, 102, 102}
+
+% 标题格式设置
+\titleformat{\section}{\Large\bfseries\color{primary}}{\thesection}{1em}{}[\titlerule]
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+% 列表间距设置
+\setlist{nosep, itemsep=0.5ex, topsep=0.5ex, partopsep=0ex, parsep=0ex}
+
+\begin{document}
+
+% 封面/标题部分
+\begin{center}
+    {\huge\bfseries 计算机/AR方向培养计划：\\ [0.5em] 核心技术实操与课程执行大纲} \\ [2em]
+   
+    {\large \textbf{培养对象：} 贺昱超} \hspace{2em} {\large \textbf{指导导师：} 毛鑫} \\ [1em]
+    {\large \textbf{编制日期：} 2026年8月} \\ [2em]
+\end{center}
+
+\vspace{1em}
+
+\noindent\textbf{【执行导言】} \\
+本项目大纲旨在落实前期制定的培养计划。进入本阶段后，科研重心将从理论认知全面转向\textbf{“底层逻辑推演”}与\textbf{“工业级代码实操”}。带领贺昱超同学依次攻克数学基础、底层编程、前沿人工智能算法及学术写作四大难关，最终实现科研成果的落地转化。
+
+\section{第一阶段：底层硬核能力构筑 (Foundation Build-up)}
+
+本阶段是整个三维重建与空间感知系统的基石，旨在夯实学生在复杂工程环境下的数理逻辑与编程基本功。
+
+\subsection{1. 核心数学基础知识延伸}
+\begin{itemize}[label=$\bullet$]
+    \item \textbf{线性代数与空间解析几何：} 深入学习矩阵乘法、特征值分解（SVD）以及三维空间中的齐次坐标变换，理解旋转矩阵与四元数在物理空间中的数学意义。
+    \item \textbf{微积分理论应用：} 将高阶微积分知识应用于梯度下降与损失函数（Loss Function）的优化过程，理解深度学习模型不断“逼近最优解”的底层数学原理。
+    \item \textbf{概率论与状态估计：} 学习卡尔曼滤波（Kalman Filter）及非线性优化（如高斯-牛顿法），掌握系统误差消除的数学模型。
+\end{itemize}
+
+\subsection{2. 计算机操作系统与底层环境}
+\begin{itemize}[label=$\bullet$]
+    \item \textbf{Linux 系统级操作：} 脱离可视化界面，全面迁移至 Ubuntu 22.04 LTS 操作系统。掌握终端交互、Shell 脚本编写、系统级环境变量配置及依赖冲突解决。
+    \item \textbf{现代版本控制：} 深入掌握 Git 与 GitHub 的工业级协同开发工作流（分支管理、冲突合并等）。
+\end{itemize}
+
+\subsection{3. 现代 C++ 面向对象编程基础}
+\begin{itemize}[label=$\bullet$]
+    \item \textbf{内存管理与指针：} 突破传统应试编程的局限，学习 C++ 智能指针、内存泄漏防范及高并发多线程编程。
+    \item \textbf{工业级工程构建：} 熟练掌握 CMake 编译工具链，理解静态库与动态库的链接原理，具备从源码编译庞大开源工程的能力。
+\end{itemize}
+
+\section{第二阶段：前沿核心算法攻坚 (Core Technology Breakthrough)}
+
+本阶段将直击目前行业最前沿的计算机视觉算法，拆解系统架构，指导学生完成从“算法理解”到“代码部署”的跨越。
+
+\subsection{1. 机器视觉与 SLAM 空间定位技术框架}
+\begin{itemize}[label=$\bullet$]
+    \item \textbf{前端视觉里程计 (Visual Odometry)：} 结合轻量级目标检测网络（YOLO 框架）的 ONNX C++ 异步推理，实现动态干扰物体（如走动人员）的掩码分割与实时剔除；提取静态环境特征并完成初始位姿估计。
+    \item \textbf{后端非线性优化 (Backend Optimization)：} 引入深度传感数据与曼哈顿世界（Manhattan World）正交平面几何约束。指导学生利用 Ceres 或 g2o 库构建联合图优化（Graph Optimization），进行光束法平差（Bundle Adjustment），彻底消除累计轨迹误差。
+    \item \textbf{闭环检测与建图 (Loop Closure \& Mapping)：} 学习基于词袋模型（BoW）的场景重识别技术，生成全局一致的空间稀疏点云地图，为后续三维重建提供极高精度的绝对空间坐标基准。
+\end{itemize}
+
+\subsection{2. 3DGS 三维重建与 AR 渲染技术框架}
+\begin{itemize}[label=$\bullet$]
+    \item \textbf{高斯场景初始化 (Scene Initialization)：} 接收 SLAM 模块输出的稀疏点云与相机位姿，初始化 3D 高斯球体的核心数学属性（空间位置、协方差矩阵/形状、不透明度、球面调和函数/颜色）。
+    \item \textbf{可微光栅化渲染 (Differentiable Rasterization)：} 深度剖析 3DGS 的核心渲染管线，理解三维高斯球向二维图像投影的数学映射关系，实现高效的区块化（Tile-based）光栅化计算。
+    \item \textbf{自适应密度控制 (Densification \& Optimization)：} 学习如何通过梯度反向传播，自适应地克隆（Clone）、分裂（Split）或消除（Prune）高斯球，不断逼近超写实的图像纹理细节。
+    \item \textbf{边缘端引擎对接 (Edge-Rendering Deployment)：} 剥离庞大的 Python 训练生态，指导学生通过纯 C++ 与 OpenGL/Vulkan 底层图形接口，实现数百万级高斯球体在移动端设备上的超高帧率（60+ FPS）实时交互漫游。
+\end{itemize}
+
+\section{第三阶段：系统集成与核心成果展示实验 (System Integration \& Experiments)}
+
+将各独立算法模块整合为一套鲁棒的完整软件系统，为严谨验证系统性能，将指导学生设计并完成以下四个维度的核心专项实验：
+
+\subsection{1. 非对称异构算力架构设计}
+\begin{itemize}[label=$\bullet$]
+    \item \textbf{算力解耦：} 利用中心台式机进行千亿次迭代的大规模模型离线训练，同时在移动端实现纯 C++ 实时低延迟计算，突破单台设备的硬件显存瓶颈。
+\end{itemize}
+
+\subsection{2. 四大核心成果展示实验设计}
+\begin{itemize}[label=$\bullet$]
+    \item \textbf{实验一：动态场景特征剔除与抗干扰验证实验。} 在真实存在人员走动的室内场景下，对比传统算法与本系统。量化评估系统剔除“半透明鬼影”和动态噪点的能力，验证 AI 掩码前端在复杂工况下的有效性。
+    \item \textbf{实验二：边缘端系统性能与高帧率压测实验。} 在移动端设备上进行极限工况压力测试。详细记录并分析系统的运行帧率（确保突破 60+ FPS）、端到端延迟（Latency）以及软硬件显存占用率，验证纯 C++ 部署的绝对优越性。
+    \item \textbf{实验三：复杂环境下的空间轨迹精度评估实验。} 在手持设备剧烈晃动及白墙等弱纹理环境下，运行空间定位系统。使用绝对轨迹误差（ATE）等国际通用学术指标，验证环境几何约束对位姿跟踪稳定性的显著提升。
+    \item \textbf{实验四：超写实虚实融合与空间漫游视觉实验。} 将生成的高保真 3D 模型加载至自研渲染器中，进行全景漫游展示。直观评估模型的光栅化投影质量、光影保真度以及虚实视角的实时映射效果，形成具有极强说服力的最终视觉成果（Demo）。
+\end{itemize}
+
+\section{第四阶段：学术成果转化与论文写作 (Academic Publishing)}
+
+将工程实操积累的大量实测数据转化为高质量的学术资产，直接赋能后续的专业升学与留学申请。
+
+\subsection{1. 论文主要工作与核心创新点提炼}
+\begin{itemize}[label=$\bullet$]
+    \item \textbf{主要工作梳理 (Main Contributions)：} 指导学生系统性概括本项目的核心工作量：(1) 提出并实现了一套结合 YOLO 掩码与 MD-SLAM 的动态场景定位追踪系统；(2) 设计了“中心训练-边缘渲染”的软硬件协同部署架构；(3) 在真实复杂室内环境下，完成了详尽的定量与定性实验验证。
+    \item \textbf{核心创新点总结 (Key Innovations)：}
+        \begin{itemize}[label=$\circ$]
+            \item \textit{算法层面创新：} 针对传统 3DGS 易受室内人员走动干扰的痛点，创新性地将轻量级动态目标掩码与曼哈顿几何先验相融合，实现了动态噪点的源头精准剔除与无鬼影高保真重建。
+            \item \textit{系统工程创新：} 突破了传统开源框架对桌面级显卡的严重依赖，通过纯 C++ 与底层图形接口重构边缘端渲染调度策略，率先实现了数百万高斯球在移动端设备（如 RTX 5060）上的 60+ FPS 满帧交互漫游。
+        \end{itemize}
+\end{itemize}
+
+\subsection{2. 学术论文框架设计与数据梳理}
+\begin{itemize}[label=$\bullet$]
+    \item 遵循国际顶级计算机学术会议及核心期刊的行文标准，指导学生撰写科研学术论文。
+    \item 掌握学术规范的排版技巧与图表绘制方法，学习如何将上述四大专项实验的原始数据，科学地转化为专业的对比曲线、数据表格以及系统架构图，全面提升论文的学术厚度与视觉呈现质量。
+\end{itemize}
+
+\subsection{3. 核心成果投递与硬核履历沉淀}
+\begin{itemize}[label=$\bullet$]
+    \item 结合本项目首创的“动态特征剔除+边缘实时渲染”双重工程亮点，锁定具有国际影响力的计算机类核心刊物进行投递发表。
+    \item 将项目源码与技术文档深度整理为高水平的开源 Portfolio，使其成为未来申请海外计算机科学（CS）顶级项目时，具备压倒性优势的“硬核代码履历”。
+\end{itemize}
+
+\vspace{2em}
+
+\noindent\rule{\textwidth}{0.4pt}
+\begin{flushright}
+\textit{注：本大纲为核心执行框架，具体教学进度将根据学生的实操吸收情况进行动态调整。}
+\end{flushright}
+
+\end{document}
